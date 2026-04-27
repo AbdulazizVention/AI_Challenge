@@ -101,15 +101,14 @@ Clone Wars"):
 - **Expandable rows** revealing a RECENT ACTIVITY table with columns
   Activity · Category · Date · Points (+N in blue)
 - **Empty-state message** when filters return no results
+- **Comments / discussion section** below the leaderboard: composer at the
+  top, **Newest / Oldest / Popular** sort tabs, and a list of comments with
+  author avatar + name, date, body, **Reply**, like count, view count, and
+  **Save for later**. Posting a new comment prepends it to the list.
 
 The categories shown in the original (the three badge icons) are reified as:
 **Education** (graduation cap), **Public Speaking** (monitor), **University
 Partnership** (handshake).
-
-What is intentionally out of scope: the SharePoint comments / discussion
-section that follows the leaderboard on the original page. It is page chrome,
-not part of the leaderboard, so it was excluded per the brief's "no extra
-features" rule.
 
 ## Repository layout
 
@@ -131,6 +130,7 @@ task-1/
 │       └── components/
 │           ├── ActivityTable.tsx
 │           ├── Avatar.tsx
+│           ├── Comments.tsx
 │           ├── Filters.tsx
 │           ├── Icons.tsx
 │           ├── LeaderRow.tsx

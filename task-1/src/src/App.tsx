@@ -5,6 +5,7 @@ import { total } from './types'
 import { Filters } from './components/Filters'
 import { Podium } from './components/Podium'
 import { LeaderRow } from './components/LeaderRow'
+import { Comments } from './components/Comments'
 
 export default function App() {
   const [year, setYear] = useState<number | 'all'>('all')
@@ -78,6 +79,8 @@ export default function App() {
             )}
           </div>
         </section>
+
+        <Comments />
       </div>
     </div>
   )
