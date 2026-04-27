@@ -13,3 +13,14 @@ ENV/
 
 # OS files
 .DS_Store
+
+# Node / build
+node_modules/
+dist/
+*.tsbuildinfo
+task-1/src/vite.config.js
+task-1/src/vite.config.d.ts
+
+# Source screenshots that contain corporate data — never commit
+task-1/screencapture-*.png
+task-1/artifacts/crops/
