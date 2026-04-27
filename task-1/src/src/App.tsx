@@ -39,11 +39,11 @@ export default function App() {
             EDU
           </a>
           <span className="mx-2 text-zinc-600">/</span>
-          <span className="text-zinc-300">Galactic Leader Board 2025</span>
+          <span className="text-zinc-300">Company Leader Board 2025</span>
         </nav>
 
         <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-6">
-          Galactic Leader Board 2025
+          Company Leader Board 2025
         </h1>
 
         <section className="bg-bg-card border border-bg-border rounded-2xl overflow-hidden">

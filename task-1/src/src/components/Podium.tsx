@@ -4,32 +4,52 @@ import { Avatar } from './Avatar'
 import { StarIcon } from './Icons'
 
 interface Props {
-  entries: Entry[] // ranked, length >= 0
+  entries: Entry[]
 }
+
+const STYLES = {
+  1: {
+    badge: 'bg-amber-500',
+    chip: 'bg-amber-500/15 text-amber-400',
+    pedestal: 'from-amber-700/60 to-amber-900/60',
+    numeral: 'text-amber-200/30',
+  },
+  2: {
+    badge: 'bg-zinc-400',
+    chip: 'bg-zinc-400/15 text-zinc-300',
+    pedestal: 'from-zinc-500/40 to-zinc-700/40',
+    numeral: 'text-zinc-300/30',
+  },
+  3: {
+    badge: 'bg-amber-700',
+    chip: 'bg-amber-700/20 text-amber-500',
+    pedestal: 'from-amber-800/50 to-amber-950/60',
+    numeral: 'text-amber-700/30',
+  },
+} as const
 
 function PodiumEntry({ entry, rank }: { entry: Entry; rank: 1 | 2 | 3 }) {
   const isFirst = rank === 1
   const size = isFirst ? 96 : 76
-  const badgeBg = isFirst ? 'bg-amber-500' : 'bg-sky-500'
-  const chipBg = isFirst ? 'bg-amber-500/15 text-amber-400' : 'bg-sky-500/15 text-sky-400'
+  const s = STYLES[rank]
 
   return (
     <div className={`flex flex-col items-center ${isFirst ? '-translate-y-3' : ''}`}>
       <div className="relative">
         <Avatar initials={entry.initials} size={size} />
         <span
-          className={`absolute -bottom-1 -right-1 ${badgeBg} text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center ring-2 ring-bg-page`}
+          className={`absolute -bottom-1 -right-1 ${s.badge} text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center ring-2 ring-bg-page`}
         >
           {rank}
         </span>
       </div>
-      <div className="mt-3 text-center">
+      <div className="mt-3 text-center px-1">
         <div className="font-semibold text-white text-sm">{entry.name}</div>
         <div className="text-xs text-zinc-400 mt-0.5">
           {entry.role} <span className="text-zinc-500">({entry.deptCode})</span>
         </div>
       </div>
-      <div className={`mt-2 inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-sm font-semibold ${chipBg}`}>
+      <div className={`mt-2 inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-sm font-semibold ${s.chip}`}>
         <StarIcon className="w-3.5 h-3.5" />
         {total(entry)}
       </div>
@@ -38,18 +58,13 @@ function PodiumEntry({ entry, rank }: { entry: Entry; rank: 1 | 2 | 3 }) {
 }
 
 function Pedestal({ rank, height }: { rank: 1 | 2 | 3; height: number }) {
-  const isFirst = rank === 1
-  const bg = isFirst
-    ? 'bg-gradient-to-b from-amber-700/60 to-amber-900/60'
-    : 'bg-gradient-to-b from-zinc-700/40 to-zinc-900/40'
+  const s = STYLES[rank]
   return (
     <div
-      className={`flex items-end justify-center rounded-t-xl ${bg} border border-bg-border border-b-0`}
+      className={`flex items-end justify-center rounded-t-xl bg-gradient-to-b ${s.pedestal} border border-bg-border border-b-0`}
       style={{ height }}
     >
-      <span className={`mb-2 text-5xl font-extrabold ${isFirst ? 'text-amber-200/30' : 'text-zinc-500/40'}`}>
-        {rank}
-      </span>
+      <span className={`mb-2 text-5xl font-extrabold ${s.numeral}`}>{rank}</span>
     </div>
   )
 }

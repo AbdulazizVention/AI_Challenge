@@ -1,9 +1,16 @@
-export type CategoryId = 'mentoring' | 'innovation' | 'culture' | 'sharing'
+export type CategoryId = 'education' | 'speaking' | 'partnership'
 
 export interface Category {
   id: CategoryId
   label: string
-  icon: 'cap' | 'cart' | 'smile' | 'eye'
+  icon: 'cap' | 'monitor' | 'handshake'
+}
+
+export interface Activity {
+  date: string // ISO yyyy-mm-dd
+  title: string
+  category: CategoryId
+  points: number
 }
 
 export interface Entry {
@@ -15,14 +22,14 @@ export interface Entry {
   year: number
   quarter: 1 | 2 | 3 | 4
   points: Record<CategoryId, number>
+  activities: Activity[]
 }
 
 export const CATEGORIES: Category[] = [
-  { id: 'mentoring', label: 'Mentoring', icon: 'cap' },
-  { id: 'innovation', label: 'Innovation', icon: 'cart' },
-  { id: 'culture', label: 'Culture', icon: 'smile' },
-  { id: 'sharing', label: 'Knowledge Sharing', icon: 'eye' },
+  { id: 'education', label: 'Education', icon: 'cap' },
+  { id: 'speaking', label: 'Public Speaking', icon: 'monitor' },
+  { id: 'partnership', label: 'University Partnership', icon: 'handshake' },
 ]
 
 export const total = (e: Entry): number =>
-  e.points.mentoring + e.points.innovation + e.points.culture + e.points.sharing
+  e.points.education + e.points.speaking + e.points.partnership

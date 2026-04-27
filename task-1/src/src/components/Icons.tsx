@@ -10,27 +10,20 @@ export const CapIcon = (p: Props) => (
   </svg>
 )
 
-export const CartIcon = (p: Props) => (
+export const MonitorIcon = (p: Props) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...p}>
-    <path d="M3 4h2l2.5 11.5a2 2 0 0 0 2 1.5h8a2 2 0 0 0 2-1.5L21 8H6" />
-    <circle cx="9" cy="20" r="1.4" />
-    <circle cx="18" cy="20" r="1.4" />
+    <rect x="3" y="4" width="18" height="12" rx="2" />
+    <line x1="8" y1="20" x2="16" y2="20" />
+    <line x1="12" y1="16" x2="12" y2="20" />
   </svg>
 )
 
-export const SmileIcon = (p: Props) => (
+export const HandshakeIcon = (p: Props) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...p}>
-    <circle cx="12" cy="12" r="9" />
-    <path d="M8 14s1.5 2 4 2 4-2 4-2" />
-    <line x1="9" y1="9.5" x2="9" y2="9.5" />
-    <line x1="15" y1="9.5" x2="15" y2="9.5" />
-  </svg>
-)
-
-export const EyeIcon = (p: Props) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...p}>
-    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" />
-    <circle cx="12" cy="12" r="3" />
+    <path d="M2 13l3-3 4 4-1.5 1.5a1.8 1.8 0 0 1-2.5 0L2 13z" />
+    <path d="M22 13l-3-3-4 4 1.5 1.5a1.8 1.8 0 0 0 2.5 0L22 13z" />
+    <path d="M9 14l2-2 2 2 2-2 2 2" />
+    <path d="M5 10l4-4 3 2 3-2 4 4" />
   </svg>
 )
 
@@ -53,4 +46,4 @@ export const SearchIcon = (p: Props) => (
   </svg>
 )
 
-export const ICONS = { cap: CapIcon, cart: CartIcon, smile: SmileIcon, eye: EyeIcon } as const
+export const ICONS = { cap: CapIcon, monitor: MonitorIcon, handshake: HandshakeIcon } as const

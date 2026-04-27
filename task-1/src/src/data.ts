@@ -1,4 +1,4 @@
-import type { Entry } from './types'
+import type { Activity, CategoryId, Entry } from './types'
 
 const initials = (name: string) =>
   name
@@ -37,19 +37,15 @@ const deptCodes = [
   'YAV.U1.G4',
   'BES.U1.T1',
   'JAK.U1.T2',
-  'SCA.U1.T3',
   'GEO.U1.D1.G1',
   'MUS.U1.D2.G2',
-  'FEL.U1.D3.G3',
   'COR.U1.D4.T1',
 ]
 
-// Fictional Star Wars-flavoured names. None match real corporate employees.
 const names: string[] = [
   'Luke Skywalker',
   'Leia Organa',
   'Han Solo',
-  'Chewbacca Wookiee',
   'Obi-Wan Kenobi',
   'Yoda Grandmaster',
   'Mace Windu',
@@ -58,26 +54,37 @@ const names: string[] = [
   'Anakin Skywalker',
   'Rex Clone',
   'Cody Commander',
-  'Bail Organa',
   'Lando Calrissian',
   'Wedge Antilles',
   'Hera Syndulla',
-  'Kanan Jarrus',
   'Sabine Wren',
-  'Ezra Bridger',
   'Bo-Katan Kryze',
   'Din Djarin',
-  'Cara Dune',
-  'Greef Karga',
   'Cassian Andor',
-  'Jyn Erso',
-  'Bodhi Rook',
-  'Rose Tico',
   'Poe Dameron',
-  'Finn Trooper',
   'Rey Skywalker',
-  'Kylo Ren',
-  'Phasma Captain',
+]
+
+const educationActivities = [
+  'Internal training: hyperdrive theory',
+  'Mentored 3 padawans this quarter',
+  'Onboarding workshop for new clones',
+  'Code review masterclass',
+  'Internship review session',
+]
+const speakingActivities = [
+  'Talk at GalaxyConf 2025',
+  'Tech talk: tactics under jamming',
+  'Panel: ethics of cloning',
+  'Lightning talk at squadron sync',
+  'Keynote at Outer Rim Summit',
+]
+const partnershipActivities = [
+  'Coruscant Academy guest lecture',
+  'Joint research with Naboo University',
+  'Career fair at Yavin Tech',
+  'Curriculum advisory board (Endor U)',
+  'University recruiting drive',
 ]
 
 let seed = 42
@@ -86,21 +93,56 @@ const rand = () => {
   seed = (seed * 9301 + 49297) % 233280
   return seed / 233280
 }
-
 const pick = <T,>(arr: T[]): T => arr[Math.floor(rand() * arr.length)]
 const int = (lo: number, hi: number) => lo + Math.floor(rand() * (hi - lo + 1))
 
-export const ENTRIES: Entry[] = names.map((name, i) => {
-  const tier = i < 3 ? 'top' : i < 10 ? 'high' : i < 22 ? 'mid' : 'low'
-  const base =
-    tier === 'top' ? [120, 180] : tier === 'high' ? [60, 110] : tier === 'mid' ? [25, 70] : [0, 30]
+const dateIn = (year: number, quarter: 1 | 2 | 3 | 4) => {
+  const startMonth = (quarter - 1) * 3 + 1
+  const month = startMonth + Math.floor(rand() * 3)
+  const day = 1 + Math.floor(rand() * 27)
+  return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
+}
 
-  const points = {
-    mentoring: int(base[0], base[1]),
-    innovation: int(base[0], base[1]),
-    culture: int(0, Math.floor(base[1] / 3)),
-    sharing: int(0, Math.floor(base[1] / 3)),
+const buildActivities = (
+  year: number,
+  quarter: 1 | 2 | 3 | 4,
+  points: Record<CategoryId, number>,
+): Activity[] => {
+  const out: Activity[] = []
+  const pools: Record<CategoryId, string[]> = {
+    education: educationActivities,
+    speaking: speakingActivities,
+    partnership: partnershipActivities,
   }
+  ;(['education', 'speaking', 'partnership'] as CategoryId[]).forEach((cat) => {
+    let remaining = points[cat]
+    while (remaining > 0) {
+      const chunk = Math.min(remaining, int(20, 60))
+      out.push({
+        date: dateIn(year, quarter),
+        title: pick(pools[cat]),
+        category: cat,
+        points: chunk,
+      })
+      remaining -= chunk
+    }
+  })
+  return out.sort((a, b) => (a.date < b.date ? 1 : -1))
+}
+
+export const ENTRIES: Entry[] = names.map((name, i) => {
+  const tier = i < 3 ? 'top' : i < 8 ? 'high' : i < 14 ? 'mid' : 'low'
+  const base =
+    tier === 'top' ? [120, 200] : tier === 'high' ? [60, 110] : tier === 'mid' ? [25, 70] : [0, 30]
+
+  const points: Record<CategoryId, number> = {
+    education: int(base[0], base[1]),
+    speaking: int(Math.floor(base[0] / 2), base[1]),
+    partnership: int(0, Math.floor(base[1] / 2)),
+  }
+
+  const year = 2025
+  const quarter = pick([1, 2, 3, 4]) as 1 | 2 | 3 | 4
 
   return {
     id: `e${i + 1}`,
@@ -108,11 +150,12 @@ export const ENTRIES: Entry[] = names.map((name, i) => {
     role: pick(roles),
     deptCode: pick(deptCodes),
     initials: initials(name),
-    year: pick([2023, 2024, 2025]),
-    quarter: pick([1, 2, 3, 4]) as 1 | 2 | 3 | 4,
+    year,
+    quarter,
     points,
+    activities: buildActivities(year, quarter, points),
   }
 })
 
-export const YEARS = [2023, 2024, 2025] as const
+export const YEARS = [2025] as const
 export const QUARTERS = [1, 2, 3, 4] as const

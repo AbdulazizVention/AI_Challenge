@@ -3,6 +3,7 @@ import type { Entry } from '../types'
 import { CATEGORIES, total } from '../types'
 import { Avatar } from './Avatar'
 import { ICONS, ChevronDown, StarIcon } from './Icons'
+import { ActivityTable } from './ActivityTable'
 
 interface Props {
   entry: Entry
@@ -37,7 +38,7 @@ export function LeaderRow({ entry, rank }: Props) {
           {activeBadges.map((c) => {
             const Icon = ICONS[c.icon]
             return (
-              <div key={c.id} className="flex flex-col items-center text-zinc-300">
+              <div key={c.id} className="flex flex-col items-center text-zinc-300" title={c.label}>
                 <Icon className="w-5 h-5" />
                 <span className="text-xs mt-0.5 text-zinc-400">{entry.points[c.id]}</span>
               </div>
@@ -59,29 +60,8 @@ export function LeaderRow({ entry, rank }: Props) {
       </button>
 
       {open && (
-        <div className="px-4 pb-4 pt-0 border-t border-bg-border/60">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-3">
-            {CATEGORIES.map((c) => {
-              const Icon = ICONS[c.icon]
-              return (
-                <div
-                  key={c.id}
-                  className="flex items-center gap-2 bg-bg-cardSoft border border-bg-border rounded-lg px-3 py-2"
-                >
-                  <Icon className="w-4 h-4 text-zinc-300" />
-                  <div className="min-w-0">
-                    <div className="text-[11px] text-zinc-400 truncate">{c.label}</div>
-                    <div className="text-sm text-white font-semibold tabular-nums">
-                      {entry.points[c.id]}
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-          <div className="mt-3 text-xs text-zinc-500">
-            {entry.year} · Q{entry.quarter}
-          </div>
+        <div className="px-4 pb-4 pt-3 border-t border-bg-border/60">
+          <ActivityTable activities={entry.activities} />
         </div>
       )}
     </div>
