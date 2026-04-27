@@ -10,13 +10,13 @@ top three, and the ranked list of expandable rows. Each row shows per-category
 icon-and-count badges and a TOTAL star score; expanding a row reveals a
 **RECENT ACTIVITY** table (Activity · Category · Date · Points).
 
-Stack: React 18 + TypeScript + Vite + Tailwind CSS. Deployed to GitHub Pages
-via a GitHub Actions workflow.
+Stack: React 18 + TypeScript + Vite + Tailwind CSS. Deployed to **Vercel**
+(auto-detected Vite preset, configured via [`task-1/src/vercel.json`](./src/vercel.json)).
 
-- Live demo: <https://abdulazizgreenphire.github.io/AI_Chalange_2/>
+- Live demo: _(set after first Vercel deploy — see `task-1/README.md`)_
 - Source: [`task-1/src/`](./src)
 - Working notes: [`task-1/notes/implementation-notes.md`](./notes/implementation-notes.md)
-- Deploy workflow: [`.github/workflows/deploy-pages.yml`](../.github/workflows/deploy-pages.yml)
+- Vercel config: [`task-1/src/vercel.json`](./src/vercel.json)
 
 ## Approach
 
@@ -33,7 +33,8 @@ files, iterate on small pieces. Roughly:
 5. Build the data model and a deterministic fictional dataset.
 6. Render and tune Tailwind classes against the layout description.
 7. Wire filter / sort / search / expand interactions.
-8. Add a GitHub Actions deploy to Pages.
+8. Configure Vercel deployment (`vercel.json` + Root Directory pointing at
+   `task-1/src`).
 
 ### Prompting techniques
 

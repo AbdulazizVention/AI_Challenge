@@ -8,25 +8,50 @@ into AI tools.
 
 ## Submission
 
-- **Live demo:** <https://abdulazizgreenphire.github.io/AI_Chalange_2/>
+- **Live demo:** _(set after first Vercel deploy)_
 - **Source:** [`src/`](./src)
 - **Write-up:** [`report.md`](./report.md)
-- **Deploy workflow:** [`../.github/workflows/deploy-pages.yml`](../.github/workflows/deploy-pages.yml)
+- **Vercel config:** [`src/vercel.json`](./src/vercel.json)
 
 ## Stack
 
 - React 18 + TypeScript
-- Vite 5 (base path `/AI_Chalange_2/` for GitHub Pages)
+- Vite 5
 - Tailwind CSS 3
-- Deployed via GitHub Actions → GitHub Pages
+- Deployed via **Vercel** (auto-detected Vite framework preset)
 
 ## Run locally
 
 ```bash
 cd task-1/src
 npm install
-npm run dev      # http://localhost:5173/AI_Chalange_2/
+npm run dev      # http://localhost:5173/
 npm run build    # outputs to task-1/src/dist
+```
+
+## Deploy to Vercel
+
+The repo is set up for Vercel — there's a `vercel.json` in `task-1/src/`
+that pins the framework, build command, and SPA rewrite. Two options:
+
+### Option A — Vercel dashboard (recommended)
+
+1. Push the repo to GitHub.
+2. In Vercel, **Add New → Project**, import the repo.
+3. In the project settings:
+   - **Root Directory:** `task-1/src`
+   - Framework Preset: `Vite` (auto-detected)
+   - Build Command: `npm run build` (auto)
+   - Output Directory: `dist` (auto)
+4. Deploy. Subsequent pushes to `main` auto-deploy.
+
+### Option B — Vercel CLI
+
+```bash
+npm i -g vercel
+cd task-1/src
+vercel            # first run: link to a new project
+vercel --prod     # production deploy
 ```
 
 ## Data handling
